@@ -1,19 +1,22 @@
 	<!DOCTYPE html>
 <html>
-<head>
+ <head>
     <meta charset = "utf-8">
     <title>mission_5-1</title>
-<head>
+ <head>
 <body>
-<form action = "mission_5-1.php" method = "post">
-<input type = "text" placeholder ="名前" name = "name" ><br>
-<input type = "text" placeholder = "コメント" name = "comment" ><br>
-<input type = "hidden"placeholder = "hidden" name = "hidden" >
-<input type = "text" placeholder = "パスワード" name = "pass"><input type = "submit" value = "送信"><br><br>
-<input type = "text" placeholder = "削除番号"name = "delete"><br>
-<input type = "text" placeholder = "パスワード"name = "delpass"><input type = "submit" value = "削除"><br><br>
-<input type = "text" placeholder = "編集番号" name ="editor"><br>
-<input type = "text" placeholder = "パスワード" name = "edipass"><input type = "submit" value = "編集"><br><br>
+	<form action = "mission_5-1.php" method = "post">
+	<input type = "text" placeholder ="名前" name = "name" ><br>
+	<input type = "text" placeholder = "コメント" name = "comment" ><br>
+	<input type = "hidden"placeholder = "hidden" name = "hidden" >
+	<input type = "text" placeholder = "パスワード" name = "pass">
+	<input type = "submit" value = "送信"><br><br>
+	<input type = "text" placeholder = "削除番号"name = "delete"><br>
+	<input type = "text" placeholder = "パスワード"name = "delpass">
+	<input type = "submit" value = "削除"><br><br>
+	<input type = "text" placeholder = "編集番号" name ="editor"><br>
+	<input type = "text" placeholder = "パスワード" name = "edipass">
+	<input type = "submit" value = "編集"><br><br>
 
 <?php
 //data baseの接続完了
@@ -46,8 +49,7 @@ $sql -> bindParam(':pass', $hidden, PDO::PARAM_STR);
 $name = $_POST['name'];
 $comment = $_POST['comment'];
 $pass = $_POST['pass'];
-$date = new DateTime('now');
-$date = $date->format('Y-M-D H:i:s');
+$date = $date->format('Y年M月D日 H:i:s');
 $sql -> execute($date);
 	
 	$sql = 'SELECT * FROM tbtest';
@@ -62,42 +64,6 @@ $sql -> execute($date);
 		echo $row['date'].' '.'<br>';
 	echo "<hr>";
 	}
-	
-//削除機能設定
-if(
-!empty($_POST["delete"])||
-!empty($_POST["delpass"])
-){
-//$_POST["delete"]に値があるなら機能する
-		
-		$delete = $_POST["delete"];
-		$delpass = $_POST["delpass"];
-		//送信formの信号を変数として定義	
-		
-	$id = $delpass;
-	$sql = 'delete from tbtest where id=:id AND pass=:pass';
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-	$stmt->bindParam(':pass', $pass, PDO::PARAM_INT);
-	$stmt->execute();
-	$results = $stmt->fetchAll();
-		foreach($results as $row){			
-		//file($filename, FILE_IGNORE_NEW_LINES)の中の行($newdata)を1投稿ずつ確認する
-		$delete_str = explode("<>", $line);
-		
-		if($delete_str[0] == $delete&&
-		$delpass == $delete_str[4]
-		){
-			if($delete_str[0] != $delete){
-			fwrite($del, $newdata.PHP_EOL);
-			}else{
-			}
-		}else{
-		fwrite($del, $line.PHP_EOL);
-		}				
-		}fclose($del);
-}
-//削除完了
 
 	?>
 	
